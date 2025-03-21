@@ -329,7 +329,7 @@ const App: React.FC = () => {
         repo: githubRepo,
         path: githubPath,
         message: `Update tasks - ${new Date().toISOString()}`,
-        content: Buffer.from(content).toString('base64'),
+        content: btoa(content),
         sha
       });
       
@@ -360,7 +360,7 @@ const App: React.FC = () => {
       });
       
       if ('content' in data && 'encoding' in data) {
-        const content = Buffer.from(data.content, data.encoding as BufferEncoding).toString();
+        const content = atob(data.content);
         const loadedTasks = parseContentToTasks(content);
         setTasks(loadedTasks);
         showSnackbar("Tasks loaded from GitHub successfully", "success");
